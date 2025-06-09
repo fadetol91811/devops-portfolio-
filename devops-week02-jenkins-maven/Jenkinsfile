@@ -10,13 +10,17 @@ pipeline {
 
         stage('Maven Compile') {
             steps {
-                sh 'mvn clean compile'
+                dir('devops-week02-jenkins-maven') {
+                    sh 'mvn clean compile'
+                }
             }
         }
 
         stage('Dependency Tree') {
             steps {
-                sh 'mvn dependency:tree'
+                dir('devops-week02-jenkins-maven') {
+                    sh 'mvn dependency:tree'
+                }
             }
         }
     }
@@ -26,7 +30,7 @@ pipeline {
             echo '✅ Build, compile, and dependency resolution succeeded!'
         }
         failure {
-            echo '❌ Something failed — check logs.'
+            echo '❌ Something failed – check logs.'
         }
     }
 }
