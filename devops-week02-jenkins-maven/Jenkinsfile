@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Maven Compile') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+
+        stage('Dependency Tree') {
+            steps {
+                sh 'mvn dependency:tree'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Build, compile, and dependency resolution succeeded!'
+        }
+        failure {
+            echo '❌ Something failed — check logs.'
+        }
+    }
+}
+
